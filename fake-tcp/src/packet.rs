@@ -15,7 +15,7 @@ pub enum IPPacket<'p> {
     V6(ipv6::Ipv6Packet<'p>),
 }
 
-impl<'a> IPPacket<'a> {
+impl IPPacket<'_> {
     pub fn get_source(&self) -> IpAddr {
         match self {
             IPPacket::V4(p) => IpAddr::V4(p.get_source()),
@@ -36,7 +36,7 @@ pub fn build_tcp_packet(
     remote_addr: SocketAddr,
     seq: u32,
     ack: u32,
-    flags: u16,
+    flags: u8,
     payload: Option<&[u8]>,
 ) -> Bytes {
     let ip_header_len = match local_addr {
